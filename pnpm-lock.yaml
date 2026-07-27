@@ -7,6 +7,13 @@ settings:
 importers:
 
   .:
+    dependencies:
+      d3-selection:
+        specifier: ^3.0.0
+        version: 3.0.0
+      d3-zoom:
+        specifier: ^3.0.0
+        version: 3.0.0
     devDependencies:
       vite:
         specifier: ^7.3.2
@@ -311,6 +318,44 @@ packages:
   '@types/estree@1.0.9':
     resolution: {integrity: sha1-zz8Oh2177hWpOrkluCv1cKOQSiQ=, tarball: http://r.npm.sankuai.com/@types/estree/download/@types/estree-1.0.9.tgz}
 
+  d3-color@3.1.0:
+    resolution: {integrity: sha1-OVsoM9+scVB/EqwvevI7+BneJOI=, tarball: http://r.npm.sankuai.com/d3-color/download/d3-color-3.1.0.tgz}
+    engines: {node: '>=12'}
+
+  d3-dispatch@3.0.1:
+    resolution: {integrity: sha1-X8dShOnCN1w2yDlBGgz1UMv8TV4=, tarball: http://r.npm.sankuai.com/d3-dispatch/download/d3-dispatch-3.0.1.tgz}
+    engines: {node: '>=12'}
+
+  d3-drag@3.0.0:
+    resolution: {integrity: sha1-mUqunNI8cZ9TteEOOgphCMaWB7o=, tarball: http://r.npm.sankuai.com/d3-drag/download/d3-drag-3.0.0.tgz}
+    engines: {node: '>=12'}
+
+  d3-ease@3.0.1:
+    resolution: {integrity: sha1-llisOKIUDVnTRhYPH2ww/aC9EvQ=, tarball: http://r.npm.sankuai.com/d3-ease/download/d3-ease-3.0.1.tgz}
+    engines: {node: '>=12'}
+
+  d3-interpolate@3.0.1:
+    resolution: {integrity: sha1-PEeqWzLFs9+1bvP9Q0IHimMrQA0=, tarball: http://r.npm.sankuai.com/d3-interpolate/download/d3-interpolate-3.0.1.tgz}
+    engines: {node: '>=12'}
+
+  d3-selection@3.0.0:
+    resolution: {integrity: sha1-wlM4IH76csxbm9FFihpBkB8eGzE=, tarball: http://r.npm.sankuai.com/d3-selection/download/d3-selection-3.0.0.tgz}
+    engines: {node: '>=12'}
+
+  d3-timer@3.0.1:
+    resolution: {integrity: sha1-YoTSonCChbGrt+IB7aQ4CvNeY7A=, tarball: http://r.npm.sankuai.com/d3-timer/download/d3-timer-3.0.1.tgz}
+    engines: {node: '>=12'}
+
+  d3-transition@3.0.1:
+    resolution: {integrity: sha1-aGn93hRIhoB3/dWYkgDLYbKhZF8=, tarball: http://r.npm.sankuai.com/d3-transition/download/d3-transition-3.0.1.tgz}
+    engines: {node: '>=12'}
+    peerDependencies:
+      d3-selection: 2 - 3
+
+  d3-zoom@3.0.0:
+    resolution: {integrity: sha1-0T9BZccyF//qpUKVzWlps+eu6PM=, tarball: http://r.npm.sankuai.com/d3-zoom/download/d3-zoom-3.0.0.tgz}
+    engines: {node: '>=12'}
+
   esbuild@0.28.1:
     resolution: {integrity: sha1-70W0Y0ycnZeilq6kEUpfmED5VXg=, tarball: http://r.npm.sankuai.com/esbuild/download/esbuild-0.28.1.tgz}
     engines: {node: '>=18'}
@@ -555,6 +600,42 @@ snapshots:
     optional: true
 
   '@types/estree@1.0.9': {}
+
+  d3-color@3.1.0: {}
+
+  d3-dispatch@3.0.1: {}
+
+  d3-drag@3.0.0:
+    dependencies:
+      d3-dispatch: 3.0.1
+      d3-selection: 3.0.0
+
+  d3-ease@3.0.1: {}
+
+  d3-interpolate@3.0.1:
+    dependencies:
+      d3-color: 3.1.0
+
+  d3-selection@3.0.0: {}
+
+  d3-timer@3.0.1: {}
+
+  d3-transition@3.0.1(d3-selection@3.0.0):
+    dependencies:
+      d3-color: 3.1.0
+      d3-dispatch: 3.0.1
+      d3-ease: 3.0.1
+      d3-interpolate: 3.0.1
+      d3-selection: 3.0.0
+      d3-timer: 3.0.1
+
+  d3-zoom@3.0.0:
+    dependencies:
+      d3-dispatch: 3.0.1
+      d3-drag: 3.0.0
+      d3-interpolate: 3.0.1
+      d3-selection: 3.0.0
+      d3-transition: 3.0.1(d3-selection@3.0.0)
 
   esbuild@0.28.1:
     optionalDependencies:
