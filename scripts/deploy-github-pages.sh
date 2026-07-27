@@ -21,7 +21,7 @@ pnpm build:pages
 touch "$site_dir/.nojekyll"
 cp "$site_dir/index.html" "$site_dir/404.html"
 
-if ! grep -q '<title>向高处去｜川西 × 拉萨完整景点图鉴</title>' "$site_dir/index.html"; then
+if ! grep -q '<title>向高处去｜川西 × 西藏完整景点图鉴</title>' "$site_dir/index.html"; then
   echo "Unexpected Pages build output: $site_dir/index.html" >&2
   exit 1
 fi
