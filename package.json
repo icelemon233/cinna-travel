@@ -1,0 +1,19 @@
+{
+  "name": "cinna-travel",
+  "private": true,
+  "version": "1.0.0",
+  "description": "川西与拉萨完整景点图鉴",
+  "type": "module",
+  "packageManager": "pnpm@11.5.2",
+  "scripts": {
+    "assets:extract": "node scripts/extract-embedded-images.mjs",
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "build:pages": "vite build --mode github-pages",
+    "preview": "vite preview --host 127.0.0.1",
+    "deploy:pages": "bash scripts/deploy-github-pages.sh"
+  },
+  "devDependencies": {
+    "vite": "^7.3.2"
+  }
+}
