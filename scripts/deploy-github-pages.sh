@@ -2,7 +2,8 @@
 set -euo pipefail
 
 repo_slug="${REPO_SLUG:-icelemon233/cinna-travel}"
-remote_url="${DEPLOY_REMOTE:-git@github.com:${repo_slug}.git}"
+fetch_remote="${DEPLOY_FETCH_REMOTE:-https://github.com/${repo_slug}.git}"
+push_remote="${DEPLOY_REMOTE:-git@github.com:${repo_slug}.git}"
 branch="${DEPLOY_BRANCH:-gh-pages}"
 site_dir="dist"
 deploy_dir="$(mktemp -d)"
@@ -12,8 +13,8 @@ cleanup() {
 }
 trap cleanup EXIT
 
-if ! git ls-remote "$remote_url" >/dev/null 2>&1; then
-  echo "Remote repository does not exist or is not accessible: $remote_url" >&2
+if ! git ls-remote "$fetch_remote" >/dev/null 2>&1; then
+  echo "Remote repository does not exist or is not accessible: $fetch_remote" >&2
   exit 1
 fi
 
@@ -26,8 +27,8 @@ if ! grep -q '<title>向高处去｜川西 × 西藏完整景点图鉴</title>' 
   exit 1
 fi
 
-if ! git clone --depth 1 --branch "$branch" "$remote_url" "$deploy_dir" >/dev/null 2>&1; then
-  git clone --depth 1 "$remote_url" "$deploy_dir" >/dev/null
+if ! git clone --depth 1 --branch "$branch" "$fetch_remote" "$deploy_dir" >/dev/null 2>&1; then
+  git clone --depth 1 "$fetch_remote" "$deploy_dir" >/dev/null
   git -C "$deploy_dir" checkout --orphan "$branch"
   git -C "$deploy_dir" rm -rf . >/dev/null 2>&1 || true
 fi
@@ -42,4 +43,5 @@ if git -C "$deploy_dir" diff --cached --quiet; then
 fi
 
 git -C "$deploy_dir" commit -m "Publish Cinna Travel site"
+git -C "$deploy_dir" remote set-url origin "$push_remote"
 git -C "$deploy_dir" push origin "$branch"
