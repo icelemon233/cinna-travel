@@ -78,8 +78,10 @@
     }
     .nav { position: absolute; inset: 0 0 auto; z-index: 2; padding: 22px 0; }
     .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-    .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; font-weight: 700; letter-spacing: .14em; }
-    .brand-mark { width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.55); border-radius: 50%; background: rgba(255,255,255,.08); backdrop-filter: blur(9px); }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; font-weight: 700; letter-spacing: .14em; }
+    .brand-mark { width: 42px; height: 42px; display: grid; flex: 0 0 auto; place-items: center; overflow: hidden; border: 1px solid rgba(255,255,255,.36); border-radius: 13px; background: linear-gradient(145deg, rgba(255,255,255,.18), rgba(255,255,255,.055)); box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 7px 22px rgba(3,20,17,.18); backdrop-filter: blur(10px); transition: transform .2s ease, border-color .2s ease, background .2s ease; }
+    .brand-mark svg { width: 34px; height: 34px; display: block; overflow: visible; }
+    .brand:hover .brand-mark { border-color: rgba(255,255,255,.68); background: linear-gradient(145deg, rgba(255,255,255,.24), rgba(255,255,255,.08)); transform: translateY(-1px); }
     .nav-links { display: flex; gap: 24px; }
     .nav-links a { color: rgba(255,255,255,.8); text-decoration: none; font-size: 13px; }
     .nav-links a:hover { color: white; }
@@ -460,7 +462,7 @@
   <header class="hero">
     <nav class="nav">
       <div class="wrap nav-inner">
-        <a class="brand" href="#top"><span class="brand-mark">↑</span><span>向高处去</span></a>
+        <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="36.5" cy="11.5" r="3" fill="#e7b761"></circle><path d="M5.5 35.5 17.2 17.2l6.1 8.2 7.2-12.3 12 22.4H5.5Z" fill="rgba(255,255,255,.13)" stroke="rgba(255,255,255,.94)" stroke-width="2" stroke-linejoin="round"></path><path d="m13.4 23.2 3.8-6 3.7 5M26.9 19.2l3.6-6.1 4.2 7.8" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M20.2 36.2c.2-3.6 5.8-4.6 5.2-8.3-.3-1.9-1.6-2.4-1.4-4.8" stroke="#e7b761" stroke-width="2.2" stroke-linecap="round"></path></svg></span><span>向高处去</span></a>
         <div class="nav-links"><a href="#map">交通地图</a><a href="#catalog">完整图鉴</a><a href="#notes">旅行准备</a><a href="#credits">图片来源</a></div>
       </div>
     </nav>
