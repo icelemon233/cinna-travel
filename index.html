@@ -127,6 +127,7 @@
       background: rgba(255,255,255,.5);
     }
     .map-control-group { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+    .map-control-group[hidden] { display: none; }
     .map-control-label { margin-right: 3px; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .12em; }
     .map-button {
       cursor: pointer;
@@ -159,6 +160,7 @@
     .map-canvas { fill: rgba(239,244,239,.82); }
     .map-land-shadow { fill: #a6b7ad; opacity: .32; filter: url(#map-land-shadow); }
     .map-land { fill: #f8f4eb; stroke: #667f75; stroke-width: 1.35; vector-effect: non-scaling-stroke; }
+    .map-city-land { fill: #f6f2e9; }
     .map-city-boundary { fill: none; stroke: rgba(101,126,117,.62); stroke-width: .9; vector-effect: non-scaling-stroke; pointer-events: none; }
     .map-city-marker { pointer-events: none; }
     .map-city-ring { fill: rgba(255,253,248,.9); stroke: rgba(75,102,93,.8); stroke-width: 1.3; }
@@ -188,6 +190,16 @@
     .map-road-shield-scenic { fill: #667b73; }
     .map-road-code { fill: white; font-size: 8.5px; font-weight: 900; letter-spacing: .02em; text-anchor: middle; dominant-baseline: central; }
     .map-road-name { fill: #30433d; font-size: 9px; font-weight: 800; dominant-baseline: central; }
+    .map-street { fill: none; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; pointer-events: none; }
+    .map-street-casing { stroke: rgba(255,253,248,.94); }
+    .map-street-local .map-street-casing { stroke-width: 2.7; }
+    .map-street-local .map-street-line { stroke: #c3cbc6; stroke-width: 1.15; }
+    .map-street-collector .map-street-casing { stroke-width: 4.2; }
+    .map-street-collector .map-street-line { stroke: #91a8a0; stroke-width: 2.15; }
+    .map-street-arterial .map-street-casing { stroke-width: 6.2; }
+    .map-street-arterial .map-street-line { stroke: #d7a24a; stroke-width: 3.35; }
+    .map-street-label { fill: #66776f; font-size: 8px; font-weight: 800; letter-spacing: .05em; text-anchor: middle; dominant-baseline: central; paint-order: stroke; stroke: rgba(248,245,237,.98); stroke-width: 3.5px; stroke-linejoin: round; pointer-events: none; }
+    .map-street-label.is-arterial { fill: #8b6a34; font-size: 8.5px; }
     .map-marker { cursor: pointer; outline: none; transition: opacity .18s ease; }
     .map-marker.is-dim { opacity: .15; }
     .map-marker-hit { fill: transparent; pointer-events: all; }
@@ -246,6 +258,9 @@
     .legend-city { width: 7px; height: 7px; border: 2px solid white; border-radius: 50%; background: #6d857c; box-shadow: 0 0 0 1px #6d857c; }
     .legend-capital { width: 9px; height: 9px; border: 2px solid var(--pine); border-radius: 50%; background: #e7b761; box-shadow: 0 0 0 2px rgba(214,162,71,.28); }
     .legend-boundary { height: 1px; background: #82978f; }
+    .legend-street-arterial { background: #d7a24a; }
+    .legend-street-collector { height: 2px; background: #91a8a0; }
+    .legend-street-local { height: 1px; background: #c3cbc6; }
     .map-panel {
       display: flex;
       flex-direction: column;
@@ -280,9 +295,14 @@
       background: transparent;
     }
     .map-road-item:hover, .map-road-item[aria-pressed="true"] { border-color: var(--line); background: #f1ece2; }
+    .map-road-item.is-static { cursor: default; }
+    .map-road-item.is-static:hover { border-color: transparent; background: transparent; }
     .road-dot { width: 7px; height: 7px; border-radius: 50%; background: #d39a3c; }
     .road-dot.expressway, .road-dot.expressway-planned { background: #2f7865; }
     .road-dot.scenic { background: #6d827b; }
+    .road-dot.arterial { background: #d7a24a; }
+    .road-dot.collector { background: #91a8a0; }
+    .road-dot.local { background: #c3cbc6; }
     .road-copy strong { display: block; font-size: 10px; }
     .road-copy small { display: block; overflow: hidden; color: var(--muted); font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
     .road-count { color: var(--muted); font-size: 9px; }
@@ -468,7 +488,8 @@
       .card[hidden] { display: flex; }
     }
   </style>
-  <script type="module" crossorigin src="/cinna-travel/assets/index-D4Dyc7gK.js"></script>
+  <script type="module" crossorigin src="/cinna-travel/assets/index-DF2em3bM.js"></script>
+  <link rel="modulepreload" crossorigin href="/cinna-travel/assets/lhasa-streets-joJIOYgd.js">
 </head>
 <body id="top">
   <a class="skip" href="#catalog">跳到景点图鉴</a>
@@ -512,7 +533,7 @@
           <div><p class="kicker">ROADS &amp; PLACES</p><hr class="gold-rule"></div>
           <div>
             <h2>先看位置和道路，<br>再决定怎样连成一程。</h2>
-            <p class="map-head-copy">地图只保留四川省与西藏自治区：80 个景点按真实经纬度落点，叠加川西常用国道、高速，以及贯穿西藏东西南北的主要交通走廊。滚轮缩放、拖拽移动；悬浮点位看详情，点击道路查看沿线景点。</p>
+            <p class="map-head-copy">地图只保留四川省与西藏自治区：80 个景点按真实经纬度落点，省区视图叠加主要交通走廊，拉萨城区则切换为真实街道路网。滚轮缩放、拖拽移动；悬浮点位看详情，点击道路查看沿线景点。</p>
           </div>
         </div>
 
@@ -523,7 +544,7 @@
             <button class="map-button" type="button" data-map-province="tibet" aria-pressed="false">西藏自治区</button>
           </div>
           <div class="map-control-group" id="map-view-tabs" role="group" aria-label="地图查看范围"></div>
-          <div class="map-control-group" aria-label="地图图层">
+          <div class="map-control-group" id="map-layer-controls" aria-label="地图图层">
             <span class="map-control-label">图层</span>
             <label class="layer-toggle"><input type="checkbox" id="layer-national" checked>国道</label>
             <label class="layer-toggle"><input type="checkbox" id="layer-expressway" checked>高速</label>
@@ -541,7 +562,7 @@
               <button class="map-zoom-button" type="button" data-map-zoom="reset" aria-label="复位地图">↺</button>
             </div>
             <div class="map-tooltip" id="map-tooltip" role="tooltip" hidden></div>
-            <div class="map-legend" aria-label="地图图例">
+            <div class="map-legend" id="map-legend" aria-label="地图图例">
               <span class="legend-item"><i class="legend-spot"></i>景点</span>
               <span class="legend-item"><i class="legend-city"></i>城市</span>
               <span class="legend-item"><i class="legend-capital"></i>省会 / 首府</span>
@@ -550,7 +571,7 @@
               <span class="legend-item"><i class="legend-line legend-expressway"></i>高速</span>
               <span class="legend-item"><i class="legend-line legend-planned"></i>部分路段需核实</span>
             </div>
-            <span class="map-attribution">© OpenStreetMap contributors · 行政边界参考 DataV · 道路为规划示意</span>
+            <span class="map-attribution" id="map-attribution">© OpenStreetMap contributors · 行政边界参考 DataV · 道路为规划示意</span>
           </div>
 
           <aside class="map-panel" aria-label="地图景点与道路信息">
@@ -559,9 +580,9 @@
             <p class="map-panel-copy" id="map-panel-copy">40 个景点，覆盖甘孜、阿坝与雅安西部。选择景点或道路查看连接关系。</p>
             <select class="map-select" id="map-spot-select" aria-label="在地图上定位景点"><option value="">定位一个景点…</option></select>
             <div class="map-detail" id="map-detail"><p>滚轮缩放、拖拽移动地图；悬浮点位可预览景点信息，点击点位或道路可查看完整连接关系。</p></div>
-            <div class="map-road-heading"><span>主要道路</span><span id="map-road-summary"></span></div>
+            <div class="map-road-heading"><span id="map-road-heading-label">主要道路</span><span id="map-road-summary"></span></div>
             <div class="map-road-list" id="map-road-list"></div>
-            <p class="map-warning">道路走向经过抽象简化，仅用于理解区域关系。实时路况、施工、管制和冬季通行条件请以导航及官方公告为准。</p>
+            <p class="map-warning" id="map-warning">道路走向经过抽象简化，仅用于理解区域关系。实时路况、施工、管制和冬季通行条件请以导航及官方公告为准。</p>
           </aside>
         </div>
       </div>
