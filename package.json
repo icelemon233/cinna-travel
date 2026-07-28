@@ -7,6 +7,7 @@
   "packageManager": "pnpm@11.5.2",
   "scripts": {
     "assets:extract": "node scripts/extract-embedded-images.mjs",
+    "assets:thumbnails": "node scripts/generate-image-thumbnails.mjs",
     "data:cities": "node scripts/generate-city-admin-data.mjs",
     "data:lhasa-streets": "node scripts/generate-lhasa-street-data.mjs",
     "dev": "vite --host 127.0.0.1",
