@@ -8,6 +8,7 @@
   "scripts": {
     "assets:extract": "node scripts/extract-embedded-images.mjs",
     "data:cities": "node scripts/generate-city-admin-data.mjs",
+    "data:lhasa-streets": "node scripts/generate-lhasa-street-data.mjs",
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
     "build:pages": "vite build --mode github-pages",
