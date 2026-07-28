@@ -159,7 +159,16 @@
     .map-canvas { fill: rgba(239,244,239,.82); }
     .map-land-shadow { fill: #a6b7ad; opacity: .32; filter: url(#map-land-shadow); }
     .map-land { fill: #f8f4eb; stroke: #667f75; stroke-width: 1.35; vector-effect: non-scaling-stroke; }
-    .map-topography { fill: url(#map-topography); opacity: .66; pointer-events: none; }
+    .map-city-boundary { fill: none; stroke: rgba(101,126,117,.62); stroke-width: .9; vector-effect: non-scaling-stroke; pointer-events: none; }
+    .map-city-marker { pointer-events: none; }
+    .map-city-ring { fill: rgba(255,253,248,.9); stroke: rgba(75,102,93,.8); stroke-width: 1.3; }
+    .map-city-core { fill: #6d857c; }
+    .map-city-name { fill: #5d716a; font-size: 8.5px; font-weight: 800; letter-spacing: .04em; dominant-baseline: central; paint-order: stroke; stroke: rgba(248,244,235,.96); stroke-width: 3px; stroke-linejoin: round; }
+    .map-city-marker.is-capital .map-city-halo { fill: rgba(225,169,75,.18); stroke: #d6a247; stroke-width: 1.2; filter: drop-shadow(0 2px 3px rgba(31,54,47,.18)); }
+    .map-city-marker.is-capital .map-city-ring { fill: var(--pine); stroke: white; stroke-width: 2; }
+    .map-city-marker.is-capital .map-city-core { fill: #e7b761; }
+    .map-capital-label { fill: rgba(23,76,67,.96); stroke: rgba(231,183,97,.92); stroke-width: 1; filter: drop-shadow(0 2px 4px rgba(26,49,43,.22)); }
+    .map-capital-name { fill: white; font-size: 9.5px; font-weight: 900; letter-spacing: .04em; dominant-baseline: central; }
     .map-province-label { fill: rgba(23,51,47,.14); font: 700 34px/1 "Songti SC", serif; letter-spacing: .14em; text-anchor: middle; pointer-events: none; }
     .map-road-group { cursor: pointer; outline: none; transition: opacity .18s ease; }
     .map-road-group.is-dim { opacity: .11; }
@@ -195,6 +204,7 @@
     .map-cluster-dot { fill: var(--red); stroke: white; stroke-width: 1.5; }
     .map-cluster-title { fill: var(--ink); font-size: 10px; font-weight: 900; }
     .map-cluster-hint { fill: var(--muted); font-size: 7.5px; }
+    .map-cluster-leader { stroke: rgba(171,57,62,.48); stroke-width: 1.2; stroke-linecap: round; }
     .map-zoom-controls { position: absolute; z-index: 5; top: 14px; right: 14px; display: grid; gap: 6px; }
     .map-zoom-button { display: grid; place-items: center; width: 34px; height: 34px; cursor: pointer; border: 1px solid rgba(29,61,53,.18); border-radius: 11px; color: var(--pine); background: rgba(255,253,248,.92); box-shadow: 0 5px 14px rgba(31,54,47,.12); font: 700 18px/1 system-ui, sans-serif; }
     .map-zoom-button:hover { color: white; border-color: var(--pine); background: var(--pine); }
@@ -233,6 +243,9 @@
     .legend-expressway { background: #2f7865; }
     .legend-planned { height: 2px; background: repeating-linear-gradient(90deg,#2f7865 0 5px,transparent 5px 8px); }
     .legend-spot { width: 8px; height: 8px; border: 1px solid white; border-radius: 50%; background: var(--pine); box-shadow: 0 0 0 1px var(--pine); }
+    .legend-city { width: 7px; height: 7px; border: 2px solid white; border-radius: 50%; background: #6d857c; box-shadow: 0 0 0 1px #6d857c; }
+    .legend-capital { width: 9px; height: 9px; border: 2px solid var(--pine); border-radius: 50%; background: #e7b761; box-shadow: 0 0 0 2px rgba(214,162,71,.28); }
+    .legend-boundary { height: 1px; background: #82978f; }
     .map-panel {
       display: flex;
       flex-direction: column;
@@ -455,7 +468,7 @@
       .card[hidden] { display: flex; }
     }
   </style>
-  <script type="module" crossorigin src="/cinna-travel/assets/index-CfFSYG1N.js"></script>
+  <script type="module" crossorigin src="/cinna-travel/assets/index-D4Dyc7gK.js"></script>
 </head>
 <body id="top">
   <a class="skip" href="#catalog">跳到景点图鉴</a>
@@ -530,11 +543,14 @@
             <div class="map-tooltip" id="map-tooltip" role="tooltip" hidden></div>
             <div class="map-legend" aria-label="地图图例">
               <span class="legend-item"><i class="legend-spot"></i>景点</span>
+              <span class="legend-item"><i class="legend-city"></i>城市</span>
+              <span class="legend-item"><i class="legend-capital"></i>省会 / 首府</span>
+              <span class="legend-item"><i class="legend-line legend-boundary"></i>市州边界</span>
               <span class="legend-item"><i class="legend-line legend-national"></i>国道</span>
               <span class="legend-item"><i class="legend-line legend-expressway"></i>高速</span>
               <span class="legend-item"><i class="legend-line legend-planned"></i>部分路段需核实</span>
             </div>
-            <span class="map-attribution">© OpenStreetMap contributors · 道路为规划示意，不替代实时导航</span>
+            <span class="map-attribution">© OpenStreetMap contributors · 行政边界参考 DataV · 道路为规划示意</span>
           </div>
 
           <aside class="map-panel" aria-label="地图景点与道路信息">
