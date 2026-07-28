@@ -523,6 +523,8 @@
       width: 272px;
       flex-direction: column;
       overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
       padding: 28px 22px 22px;
       color: white;
       background:
@@ -530,6 +532,7 @@
         linear-gradient(175deg, #102e29 0%, #173e36 56%, #0d2824 100%);
       box-shadow: 14px 0 42px rgba(9,31,27,.18);
     }
+    .site-sidebar::-webkit-scrollbar { display: none; width: 0; height: 0; }
     .sidebar-brand { display: flex; align-items: center; gap: 13px; color: white; text-decoration: none; }
     .sidebar-brand .brand-mark { width: 48px; height: 48px; border-radius: 15px; }
     .sidebar-brand-copy { min-width: 0; }
@@ -1920,14 +1923,80 @@
       const hash = link.getAttribute('href');
       return { link, target: hash === '#top' ? document.querySelector('.hero') : document.querySelector(hash) };
     }).filter((item) => item.target);
-    if ('IntersectionObserver' in window) {
-      const navigationObserver = new IntersectionObserver((entries) => {
-        const visible = entries.filter((entry) => entry.isIntersecting).sort((first, second) => second.intersectionRatio - first.intersectionRatio)[0];
-        if (!visible) return;
-        sidebarLinks.forEach((link) => link.classList.toggle('is-active', navigationTargets.find((item) => item.target === visible.target)?.link === link));
-      }, { rootMargin: '-18% 0px -62% 0px', threshold: [0, .05, .2] });
-      navigationTargets.forEach(({ target }) => navigationObserver.observe(target));
+    const sidebar = document.getElementById('site-sidebar');
+    let navigationFrame = 0;
+    let clickedNavigationLink = null;
+    let clickedNavigationTimer = 0;
+
+    function setActiveNavigation(link) {
+      if (!link) return;
+      const changed = !link.classList.contains('is-active');
+      sidebarLinks.forEach((item) => {
+        const active = item === link;
+        item.classList.toggle('is-active', active);
+        if (active) item.setAttribute('aria-current', 'location');
+        else item.removeAttribute('aria-current');
+      });
+      if (!changed) return;
+
+      const sidebarBounds = sidebar.getBoundingClientRect();
+      const linkBounds = link.getBoundingClientRect();
+      if (linkBounds.top < sidebarBounds.top + 16 || linkBounds.bottom > sidebarBounds.bottom - 16) {
+        sidebar.scrollTo({
+          top: sidebar.scrollTop + linkBounds.top - sidebarBounds.top - sidebar.clientHeight / 2 + linkBounds.height / 2,
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        });
+      }
     }
+
+    function updateActiveNavigation() {
+      navigationFrame = 0;
+      if (!navigationTargets.length || clickedNavigationLink) return;
+
+      const activationLine = Math.min(window.innerHeight * .3, 260);
+      const atPageEnd = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4;
+      let activeItem = navigationTargets[0];
+      let activeTop = activeItem.target.getBoundingClientRect().top;
+
+      if (atPageEnd) {
+        activeItem = navigationTargets[navigationTargets.length - 1];
+      } else {
+        navigationTargets.forEach((item) => {
+          const top = item.target.getBoundingClientRect().top;
+          if (top > activationLine) return;
+
+          if (Math.abs(top - activeTop) > 1 || item.link.classList.contains('is-active')) {
+            activeItem = item;
+            activeTop = top;
+          }
+        });
+      }
+
+      setActiveNavigation(activeItem.link);
+    }
+
+    function requestNavigationUpdate() {
+      if (!navigationFrame) navigationFrame = requestAnimationFrame(updateActiveNavigation);
+    }
+
+    sidebarLinks.forEach((link) => link.addEventListener('click', () => {
+      clickedNavigationLink = link;
+      setActiveNavigation(link);
+      window.clearTimeout(clickedNavigationTimer);
+      clickedNavigationTimer = window.setTimeout(() => {
+        clickedNavigationLink = null;
+        requestNavigationUpdate();
+      }, 900);
+    }));
+    window.addEventListener('scroll', requestNavigationUpdate, { passive: true });
+    window.addEventListener('resize', requestNavigationUpdate);
+    window.addEventListener('load', requestNavigationUpdate, { once: true });
+    if ('onscrollend' in window) window.addEventListener('scrollend', () => {
+      clickedNavigationLink = null;
+      window.clearTimeout(clickedNavigationTimer);
+      requestNavigationUpdate();
+    }, { passive: true });
+    requestNavigationUpdate();
 
     document.querySelectorAll('[data-destination-filter]').forEach((button) => button.addEventListener('click', () => {
       state.region = button.dataset.destinationFilter;
