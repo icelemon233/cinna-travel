@@ -3,23 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="川西与西藏完整景点图鉴：覆盖两地 80 个代表目的地，可按区域和景观主题筛选，含地图、道路、多图、海拔、季节与游玩建议。">
+  <meta name="description" content="Cinna Travel（Cinna 旅行手册）：覆盖川西、西藏与香港的目的地图鉴、铁路交通、住宿选择、行李清单、天气、安全与行前规划。">
   <meta name="theme-color" content="#174c43">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="zh_CN">
-  <meta property="og:title" content="向高处去｜川西 × 西藏完整景点图鉴">
-  <meta property="og:description" content="80 个川西与西藏代表目的地，包含交互地图、道路、多图、海拔、季节与游玩建议。">
+  <meta property="og:title" content="Cinna Travel｜Cinna 旅行手册">
+  <meta property="og:description" content="川西、西藏与香港的完整旅行手册：目的地、交通、住宿、行李、天气和安全，一页整理。">
   <meta property="og:url" content="https://icelemon233.github.io/cinna-travel/">
   <meta property="og:image" content="https://icelemon233.github.io/cinna-travel/travel-assets/d33fc98ee5601ed7.webp">
   <meta property="og:image:alt" content="稻城亚丁雪山与高原森林">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="向高处去｜川西 × 西藏完整景点图鉴">
-  <meta name="twitter:description" content="80 个川西与西藏代表目的地，包含交互地图、道路、多图、海拔、季节与游玩建议。">
+  <meta name="twitter:title" content="Cinna Travel｜Cinna 旅行手册">
+  <meta name="twitter:description" content="川西、西藏与香港的完整旅行手册：目的地、交通、住宿、行李、天气和安全，一页整理。">
   <meta name="twitter:image" content="https://icelemon233.github.io/cinna-travel/travel-assets/d33fc98ee5601ed7.webp">
   <link rel="canonical" href="https://icelemon233.github.io/cinna-travel/">
   <link rel="icon" href="/cinna-travel/favicon.svg" type="image/svg+xml">
   <link rel="preload" as="image" href="/cinna-travel/travel-assets/d33fc98ee5601ed7.webp" type="image/webp" fetchpriority="high">
-  <title>向高处去｜川西 × 西藏完整景点图鉴</title>
+  <title>Cinna Travel｜Cinna 旅行手册</title>
   <style>
     :root {
       --ink: #17332f;
@@ -303,7 +303,7 @@
     .map-road-list { display: grid; gap: 6px; max-height: 290px; overflow: auto; padding-right: 3px; }
     .map-road-item {
       display: grid;
-      grid-template-columns: 8px 1fr auto;
+      grid-template-columns: 8px minmax(0, 1fr) auto;
       align-items: center;
       gap: 8px;
       cursor: pointer;
@@ -322,7 +322,8 @@
     .road-dot.arterial { background: #d7a24a; }
     .road-dot.collector { background: #91a8a0; }
     .road-dot.local { background: #c3cbc6; }
-    .road-copy strong { display: block; font-size: 12px; }
+    .road-copy { min-width: 0; }
+    .road-copy strong { display: block; overflow-wrap: anywhere; font-size: 12px; }
     .road-copy small { display: block; overflow: hidden; color: var(--muted); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
     .road-count { color: var(--muted); font-size: 12px; }
     .map-warning { margin: auto 0 0; padding-top: 15px; color: #71584b; font-size: 12px; }
@@ -513,12 +514,177 @@
       .lightbox-layout { min-height: 100vh; }
       .lightbox-media { min-height: 56vh; }
     }
+    /* Cinna Travel handbook shell */
+    .site-sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      z-index: 40;
+      display: flex;
+      width: 272px;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 28px 22px 22px;
+      color: white;
+      background:
+        radial-gradient(circle at 15% 6%, rgba(222,178,99,.2), transparent 28%),
+        linear-gradient(175deg, #102e29 0%, #173e36 56%, #0d2824 100%);
+      box-shadow: 14px 0 42px rgba(9,31,27,.18);
+    }
+    .sidebar-brand { display: flex; align-items: center; gap: 13px; color: white; text-decoration: none; }
+    .sidebar-brand .brand-mark { width: 48px; height: 48px; border-radius: 15px; }
+    .sidebar-brand-copy { min-width: 0; }
+    .sidebar-brand-copy strong { display: block; font: 700 18px/1.15 Georgia, "Songti SC", serif; letter-spacing: .02em; }
+    .sidebar-brand-copy small { display: block; margin-top: 5px; color: rgba(255,255,255,.6); font-size: 11px; letter-spacing: .08em; }
+    .sidebar-label { margin: 32px 11px 10px; color: rgba(255,255,255,.42); font-size: 10px; font-weight: 900; letter-spacing: .2em; }
+    .sidebar-nav { display: grid; gap: 3px; }
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-height: 39px;
+      padding: 7px 11px;
+      border-radius: 11px;
+      color: rgba(255,255,255,.72);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color .18s ease, background .18s ease, transform .18s ease;
+    }
+    .sidebar-nav a::before { content: ""; width: 5px; height: 5px; flex: 0 0 auto; border: 1px solid currentColor; border-radius: 50%; }
+    .sidebar-nav a:hover, .sidebar-nav a.is-active { color: white; background: rgba(255,255,255,.1); transform: translateX(2px); }
+    .sidebar-nav a.is-active::before { border-color: #e7b761; background: #e7b761; box-shadow: 0 0 0 4px rgba(231,183,97,.12); }
+    .sidebar-destinations { display: grid; gap: 7px; }
+    .sidebar-destination {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 9px;
+      align-items: center;
+      padding: 9px 11px;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 12px;
+      color: white;
+      text-decoration: none;
+      background: rgba(255,255,255,.045);
+    }
+    .sidebar-destination span { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 9px; color: #163a33; background: #e8c27e; font-weight: 900; }
+    .sidebar-destination strong { display: block; font-size: 13px; }
+    .sidebar-destination small { display: block; color: rgba(255,255,255,.5); font-size: 10px; }
+    .sidebar-meta { margin-top: auto; padding: 24px 11px 0; color: rgba(255,255,255,.44); font-size: 10px; line-height: 1.65; }
+    .mobile-bar, .sidebar-scrim { display: none; }
+    .hero .nav { display: none; }
+    .hero, main, footer { margin-left: 272px; }
+    .hero { min-height: 84vh; }
+    .hero::after { background: linear-gradient(180deg, rgba(6,25,22,.48), rgba(6,25,22,.05) 34%, rgba(6,25,22,.91)), linear-gradient(90deg, rgba(6,31,26,.58), transparent 68%); }
+    .hero-content { padding-top: 86px; }
+    .hero h1 { max-width: 1040px; font-size: clamp(54px, 7vw, 102px); }
+    .hero h1 span { color: #efd097; }
+    .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 25px; }
+    .hero-action { padding: 10px 17px; border: 1px solid rgba(255,255,255,.36); border-radius: 999px; color: white; text-decoration: none; background: rgba(255,255,255,.08); backdrop-filter: blur(10px); font-size: 12px; font-weight: 800; }
+    .hero-action.primary { color: #163a33; border-color: #efd097; background: #efd097; }
+
+    .destinations { padding: 92px 0 96px; scroll-margin-top: 18px; }
+    .section-intro { display: grid; grid-template-columns: .62fr 1.38fr; gap: 72px; align-items: start; margin-bottom: 36px; }
+    .section-intro h2 { margin: 0; font: clamp(38px, 5vw, 64px)/1.12 "Songti SC", "STSong", serif; letter-spacing: -.04em; }
+    .section-intro p { margin: 15px 0 0; color: var(--muted); }
+    .destination-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 17px; }
+    .destination-card { position: relative; min-height: 410px; overflow: hidden; border-radius: 24px; color: white; background: #173e36; box-shadow: var(--shadow); scroll-margin-top: 20px; isolation: isolate; }
+    .destination-card::before { content: ""; position: absolute; inset: 0; z-index: -2; background: var(--destination-image) center/cover; transition: transform .5s ease; }
+    .destination-card::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(7,24,21,.08), rgba(7,24,21,.9)); }
+    .destination-card:hover::before { transform: scale(1.035); }
+    .destination-card-content { position: absolute; inset: auto 0 0; padding: 27px; }
+    .destination-card .destination-number { color: #efd097; font-size: 11px; font-weight: 900; letter-spacing: .18em; }
+    .destination-card h3 { margin: 8px 0 4px; font: 42px/1 "Songti SC", serif; }
+    .destination-card p { margin: 0; color: rgba(255,255,255,.76); font-size: 13px; }
+    .destination-facts { display: flex; gap: 13px; flex-wrap: wrap; margin: 17px 0; font-size: 11px; }
+    .destination-facts span { padding: 5px 8px; border-radius: 7px; background: rgba(255,255,255,.12); }
+    .destination-action { cursor: pointer; padding: 9px 13px; border: 1px solid rgba(255,255,255,.35); border-radius: 999px; color: white; background: rgba(255,255,255,.1); font-size: 11px; font-weight: 900; }
+
+    .handbook { padding: 92px 0; border-top: 1px solid var(--line); background: #ede5d9; scroll-margin-top: 20px; }
+    .handbook-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 17px; }
+    .handbook-card { padding: 26px; border: 1px solid var(--line); border-radius: 22px; background: var(--card); box-shadow: 0 14px 38px rgba(31,52,46,.07); scroll-margin-top: 22px; }
+    .handbook-card.wide { grid-column: 1 / -1; }
+    .handbook-icon { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 13px; color: white; background: var(--pine); font-size: 18px; }
+    .handbook-card h3 { margin: 16px 0 7px; font: 28px/1.15 "Songti SC", serif; }
+    .handbook-card > p { margin: 0; color: var(--muted); font-size: 13px; }
+    .guide-columns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 19px; }
+    .guide-column { padding: 15px; border-radius: 14px; background: #f1eee7; }
+    .guide-column strong { display: block; margin-bottom: 7px; color: var(--pine); font-size: 13px; }
+    .guide-column p, .guide-column li { margin: 0; color: var(--muted); font-size: 12px; }
+    .guide-column ul { margin: 0; padding-left: 17px; }
+    .weather-table { width: 100%; margin-top: 18px; border-collapse: collapse; font-size: 12px; }
+    .weather-table th, .weather-table td { padding: 11px 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    .weather-table th { color: var(--pine); }
+    .packing-list { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; margin-top: 18px; }
+    .packing-item { display: flex; align-items: flex-start; gap: 9px; padding: 11px; border: 1px solid var(--line); border-radius: 12px; color: var(--muted); background: #f7f4ed; font-size: 12px; cursor: pointer; }
+    .packing-item input { margin-top: 4px; accent-color: var(--pine); }
+    .packing-item:has(input:checked) { color: #7c8883; text-decoration: line-through; background: #e9eee9; }
+    .handbook-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 17px; }
+    .handbook-links a { padding: 7px 10px; border-radius: 999px; color: var(--pine); background: #e7eee9; text-decoration: none; font-size: 11px; font-weight: 800; }
+
+    .map-road-rail-casing { stroke: rgba(255,253,248,.97); stroke-width: 6.2; }
+    .map-road-high-speed-rail { stroke: #b04648; stroke-width: 3.6; }
+    .map-road-conventional-rail { stroke: #4f6072; stroke-width: 3; }
+    .map-road-metro { stroke: #8f5d91; stroke-width: 2.7; }
+    .map-road-ferry { stroke: #3d89a0; stroke-width: 2.4; stroke-dasharray: 5 4; }
+    .map-head h2 { font-size: clamp(36px, 4vw, 50px); }
+    .map-road-shield-high-speed-rail { fill: #b04648; }
+    .map-road-shield-conventional-rail { fill: #4f6072; }
+    .map-road-shield-metro { fill: #8f5d91; }
+    .map-road-shield-ferry { fill: #3d89a0; }
+    .map-station { cursor: help; outline: none; }
+    .map-station-symbol { fill: #fffdf8; stroke-width: 2; filter: drop-shadow(0 2px 3px rgba(18,43,37,.25)); }
+    .map-station.high-speed .map-station-symbol { stroke: #b04648; }
+    .map-station.rail .map-station-symbol { stroke: #4f6072; }
+    .map-station.metro .map-station-symbol { stroke: #8f5d91; }
+    .map-station-code { fill: var(--ink); font-size: 7px; font-weight: 900; text-anchor: middle; dominant-baseline: central; }
+    .map-station-name { fill: #3b4a47; font-size: 8px; font-weight: 800; dominant-baseline: central; paint-order: stroke; stroke: #f8f4eb; stroke-width: 3px; }
+    .map-station:hover .map-station-symbol, .map-station:focus .map-station-symbol { fill: #efd097; }
+    .legend-high-speed-rail { background: #b04648; }
+    .legend-conventional-rail { background: #4f6072; }
+    .legend-metro { background: #8f5d91; }
+    .legend-station { width: 9px; height: 9px; border: 2px solid #4f6072; border-radius: 3px; background: white; }
+    .road-dot.high-speed-rail { background: #b04648; }
+    .road-dot.conventional-rail { background: #4f6072; }
+    .road-dot.metro { background: #8f5d91; }
+    .road-dot.ferry { background: #3d89a0; }
+
+    @media (max-width: 1100px) {
+      .site-sidebar { width: 250px; transform: translateX(-104%); transition: transform .24s ease; }
+      body.sidebar-open .site-sidebar { transform: translateX(0); }
+      .sidebar-scrim { position: fixed; inset: 0; z-index: 35; display: block; border: 0; opacity: 0; visibility: hidden; background: rgba(7,24,21,.5); transition: .24s ease; }
+      body.sidebar-open .sidebar-scrim { opacity: 1; visibility: visible; }
+      .mobile-bar { position: fixed; inset: 0 0 auto; z-index: 32; display: flex; align-items: center; justify-content: space-between; height: 58px; padding: 0 15px; color: white; background: rgba(14,45,39,.94); backdrop-filter: blur(15px); }
+      .mobile-brand { display: flex; align-items: center; gap: 9px; color: white; text-decoration: none; font-weight: 900; }
+      .mobile-brand svg { width: 29px; height: 29px; }
+      .sidebar-toggle { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid rgba(255,255,255,.2); border-radius: 11px; color: white; background: rgba(255,255,255,.08); cursor: pointer; }
+      .hero, main, footer { margin-left: 0; }
+      .hero { padding-top: 58px; }
+      .hero-source { bottom: 8px; }
+      .destination-grid { grid-template-columns: 1fr 1fr; }
+      .destination-card:last-child { grid-column: 1 / -1; min-height: 340px; }
+    }
+    @media (max-width: 720px) {
+      .hero { min-height: 780px; }
+      .hero-content { padding-top: 90px; }
+      .hero h1 { font-size: clamp(48px, 14vw, 70px); }
+      .hero-row { grid-template-columns: 1fr; gap: 28px; }
+      .section-intro, .map-head { grid-template-columns: 1fr; gap: 12px; }
+      .destination-grid, .handbook-grid { grid-template-columns: 1fr; }
+      .destination-card, .destination-card:last-child { grid-column: auto; min-height: 390px; }
+      .handbook-card.wide { grid-column: auto; }
+      .guide-columns, .packing-list { grid-template-columns: 1fr; }
+      .weather-table { display: block; overflow-x: auto; }
+      .map-controls { align-items: flex-start; flex-direction: column; }
+      .layer-toggle { min-height: 28px; }
+      .search-wrap { flex: 1 0 calc(100% - 54px); width: calc(100% - 54px); min-width: 0; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       *, *::before, *::after { transition-duration: .01ms !important; }
     }
     @media print {
-      .nav, .filter-shell, .map-controls, .map-panel, .hero-source, dialog { display: none !important; }
+      .nav, .site-sidebar, .mobile-bar, .sidebar-scrim, .filter-shell, .map-controls, .map-panel, .hero-source, dialog { display: none !important; }
+      .hero, main, footer { margin-left: 0 !important; }
       .hero { min-height: 420px; }
       .map-layout { display: block; }
       .map-stage { min-height: 440px; box-shadow: none; }
@@ -527,11 +693,34 @@
       .card[hidden] { display: flex; }
     }
   </style>
-  <script type="module" crossorigin src="/cinna-travel/assets/index-CM6K-tNK.js"></script>
+  <script type="module" crossorigin src="/cinna-travel/assets/index-CHE53Kzu.js"></script>
   <link rel="modulepreload" crossorigin href="/cinna-travel/assets/lhasa-streets-joJIOYgd.js">
 </head>
 <body id="top">
-  <a class="skip" href="#catalog">跳到景点图鉴</a>
+  <a class="skip" href="#destinations">跳到主要内容</a>
+  <aside class="site-sidebar" id="site-sidebar" aria-label="旅行手册导航">
+    <a class="sidebar-brand" href="#top">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 11.5c5.4-2.1 11.2-1.1 17 3.1v24.1c-5.8-4.2-11.6-5.2-17-3.1V11.5Z" stroke="white" stroke-width="2" stroke-linejoin="round"/><path d="M41 11.5c-5.4-2.1-11.2-1.1-17 3.1v24.1c5.8-4.2 11.6-5.2 17-3.1V11.5Z" stroke="white" stroke-width="2" stroke-linejoin="round"/><path d="m29.2 19.5-2.6 8.1-7.8 3 2.6-8.1 7.8-3Z" fill="#e7b761" stroke="#f8e2b8" stroke-width="1.2"/><circle cx="25" cy="25" r="1.7" fill="#173e36"/></svg></span>
+      <span class="sidebar-brand-copy"><strong>Cinna Travel</strong><small>Cinna 旅行手册</small></span>
+    </a>
+    <p class="sidebar-label">HANDBOOK</p>
+    <nav class="sidebar-nav">
+      <a href="#top" class="is-active">首页</a><a href="#destinations">目的地</a><a href="#map">交通地图</a><a href="#catalog">景点图鉴</a>
+      <a href="#planning">出行规划</a><a href="#transport">出行交通</a><a href="#stays">住宿选择</a><a href="#packing">行李清单</a><a href="#weather">天气穿衣</a><a href="#safety">证件安全</a><a href="#credits">图片来源</a>
+    </nav>
+    <p class="sidebar-label">DESTINATIONS</p>
+    <div class="sidebar-destinations">
+      <a class="sidebar-destination" href="#destination-sichuan"><span>川</span><div><strong>川西</strong><small>雪山 · 草原 · 藏寨</small></div></a>
+      <a class="sidebar-destination" href="#destination-tibet"><span>藏</span><div><strong>西藏</strong><small>七地市 · 高原铁路</small></div></a>
+      <a class="sidebar-destination" href="#destination-hongkong"><span>港</span><div><strong>香港</strong><small>城市 · 海港 · 离岛</small></div></a>
+    </div>
+    <p class="sidebar-meta">资料用于旅行灵感和行前整理。票务、天气、开放、证件与交通安排请在出发前再次核对官方信息。</p>
+  </aside>
+  <button class="sidebar-scrim" type="button" aria-label="关闭导航" data-sidebar-close></button>
+  <div class="mobile-bar">
+    <a class="mobile-brand" href="#top"><svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M7 11.5c5.4-2.1 11.2-1.1 17 3.1v24.1c-5.8-4.2-11.6-5.2-17-3.1V11.5Z" stroke="white" stroke-width="2"/><path d="M41 11.5c-5.4-2.1-11.2-1.1-17 3.1v24.1c5.8-4.2 11.6-5.2 17-3.1V11.5Z" stroke="white" stroke-width="2"/><path d="m29.2 19.5-2.6 8.1-7.8 3 2.6-8.1 7.8-3Z" fill="#e7b761"/></svg><span>Cinna Travel</span></a>
+    <button class="sidebar-toggle" type="button" aria-label="打开导航" aria-controls="site-sidebar" aria-expanded="false">☰</button>
+  </div>
   <header class="hero">
     <nav class="nav">
       <div class="wrap nav-inner">
@@ -540,14 +729,14 @@
       </div>
     </nav>
     <div class="wrap hero-content">
-      <p class="eyebrow">THE COMPLETE HIGHLAND ATLAS</p>
-      <h1>川西 <span>×</span> 西藏<br>完整景点图鉴</h1>
+      <p class="eyebrow">YOUR COMPLETE TRAVEL HANDBOOK</p>
+      <h1>把每一次出发，<br><span>整理成一本旅行手册。</span></h1>
       <div class="hero-row">
-        <p class="hero-lead">从贡嘎群峰、九寨海子与康巴草原，到拉萨古城、林芝峡谷、珠峰与阿里荒原——把川西经典环线和西藏七地市的代表目的地放进同一张高原图鉴。</p>
+        <div><p class="hero-lead">从川西雪山、西藏高原到香港海港：独立目的地、交互交通地图、景点图鉴，以及出行、住宿、行李、天气、证件和安全建议，都放在一个可以反复翻阅的手册里。</p><div class="hero-actions"><a class="hero-action primary" href="#destinations">选择目的地</a><a class="hero-action" href="#planning">开始做计划</a></div></div>
         <div class="stats">
-          <div class="stat"><strong>80</strong><small>知名景点</small></div>
-          <div class="stat"><strong>160</strong><small>实景图片</small></div>
-          <div class="stat"><strong>7</strong><small>主题分类</small></div>
+          <div class="stat"><strong>95</strong><small>代表景点</small></div>
+          <div class="stat"><strong>190</strong><small>本地图片</small></div>
+          <div class="stat"><strong>3</strong><small>独立目的地</small></div>
         </div>
       </div>
     </div>
@@ -555,13 +744,22 @@
   </header>
 
   <main>
-    <section class="intro">
-      <div class="wrap intro-grid">
-        <div><p class="kicker">A BIGGER MAP</p><hr class="gold-rule"></div>
-        <div>
-          <h2>不做短清单，<br>做一张可以反复翻的地图。</h2>
-          <p class="intro-copy">本页覆盖川西常见大环线、阿坝与甘孜经典目的地、雅安西部观景地，以及西藏的拉萨、日喀则、山南、林芝、昌都、那曲和阿里。可同时按区域、景观主题和名称筛选。</p>
-          <div class="scope-note"><strong>范围说明</strong><span>不再把西藏内容收缩成“拉萨及出发线”：羊卓雍错、桑耶寺归入山南，珠峰归入日喀则，然乌湖与来古冰川归入昌都，并补齐林芝、那曲和阿里的代表目的地。</span></div>
+    <section class="destinations" id="destinations">
+      <div class="wrap">
+        <div class="section-intro">
+          <div><p class="kicker">CHOOSE A DESTINATION</p><hr class="gold-rule"></div>
+          <div><h2>川西、西藏、香港，<br>三本独立的目的地分册。</h2><p>不再把川西和西藏合并成一条线路。先选择目的地，再进入对应图鉴和交通地图；手册中的住宿、天气、行李与证件建议也分别给出差异。</p></div>
+        </div>
+        <div class="destination-grid">
+          <article class="destination-card" id="destination-sichuan" style="--destination-image:url('/cinna-travel/travel-assets/7014771bd76aee34.webp')">
+            <div class="destination-card-content"><span class="destination-number">DESTINATION 01</span><h3>川西</h3><p>甘孜、阿坝与雅安西部的雪山、草原、海子和藏寨。</p><div class="destination-facts"><span>40 个景点</span><span>动车 + 公路</span><span>海拔跨度大</span></div><button class="destination-action" type="button" data-destination-filter="west">查看川西图鉴 →</button></div>
+          </article>
+          <article class="destination-card" id="destination-tibet" style="--destination-image:url('/cinna-travel/travel-assets/8ef7b72bb7e22ae4.webp')">
+            <div class="destination-card-content"><span class="destination-number">DESTINATION 02</span><h3>西藏</h3><p>拉萨、山南、日喀则、林芝、昌都、那曲与阿里。</p><div class="destination-facts"><span>40 个景点</span><span>高原铁路</span><span>证件与适应</span></div><button class="destination-action" type="button" data-destination-filter="tibet">查看西藏图鉴 →</button></div>
+          </article>
+          <article class="destination-card" id="destination-hongkong" style="--destination-image:url('/cinna-travel/travel-assets/hk-victoria-harbour-1.webp')">
+            <div class="destination-card-content"><span class="destination-number">DESTINATION 03 · NEW</span><h3>香港</h3><p>港九街区、维港、山径、离岛与大屿山的城市海岛旅行。</p><div class="destination-facts"><span>15 个景点</span><span>高铁 + 港铁</span><span>城市与郊野</span></div><button class="destination-action" type="button" data-destination-filter="hong-kong">查看香港图鉴 →</button></div>
+          </article>
         </div>
       </div>
     </section>
@@ -571,8 +769,8 @@
         <div class="map-head">
           <div><p class="kicker">ROADS &amp; PLACES</p><hr class="gold-rule"></div>
           <div>
-            <h2>先看位置和道路，<br>再决定怎样连成一程。</h2>
-            <p class="map-head-copy">地图只保留四川省与西藏自治区：80 个景点按真实经纬度落点，省区视图叠加主要交通走廊，拉萨城区则切换为真实街道路网。滚轮缩放、拖拽移动；悬浮点位看详情，点击道路查看沿线景点。</p>
+            <h2>把公路、铁路与车站，<br>放进同一张旅行地图。</h2>
+            <p class="map-head-copy">在川西、西藏与香港之间切换：景点按真实经纬度落点，并叠加国道、高速、动车 / 高铁、普速铁路、港铁和代表车站。拉萨城区保留真实街道路网；地图支持滚轮缩放、拖拽和悬浮信息。</p>
           </div>
         </div>
 
@@ -581,6 +779,7 @@
             <span class="map-control-label">省区</span>
             <button class="map-button" type="button" data-map-province="sichuan" aria-pressed="true">四川省 · 川西</button>
             <button class="map-button" type="button" data-map-province="tibet" aria-pressed="false">西藏自治区</button>
+            <button class="map-button" type="button" data-map-province="hongkong" aria-pressed="false">香港特别行政区</button>
           </div>
           <div class="map-control-group" id="map-view-tabs" role="group" aria-label="地图查看范围"></div>
           <div class="map-control-group" id="map-layer-controls" role="group" aria-label="地图图层">
@@ -588,12 +787,16 @@
             <label class="layer-toggle"><input type="checkbox" id="layer-national" checked>国道</label>
             <label class="layer-toggle"><input type="checkbox" id="layer-expressway" checked>高速</label>
             <label class="layer-toggle"><input type="checkbox" id="layer-scenic" checked>连接线</label>
+            <label class="layer-toggle"><input type="checkbox" id="layer-high-speed-rail" checked>高铁 / 动车</label>
+            <label class="layer-toggle"><input type="checkbox" id="layer-conventional-rail" checked>普速铁路</label>
+            <label class="layer-toggle"><input type="checkbox" id="layer-metro" checked>地铁 / 市域线</label>
+            <label class="layer-toggle"><input type="checkbox" id="layer-stations" checked>车站</label>
           </div>
         </div>
 
         <div class="map-layout">
           <div class="map-stage">
-            <svg id="travel-map" viewBox="0 0 1000 650" role="group" aria-label="川西与西藏景点及交通路线地图"></svg>
+            <svg id="travel-map" viewBox="0 0 1000 650" role="group" aria-label="川西、西藏与香港景点及交通路线地图"></svg>
             <p class="map-gesture-hint">滚轮缩放 · 拖拽移动 · 双击放大</p>
             <div class="map-zoom-controls" role="group" aria-label="地图缩放">
               <button class="map-zoom-button" type="button" data-map-zoom="in" aria-label="放大地图">＋</button>
@@ -608,9 +811,13 @@
               <span class="legend-item"><i class="legend-line legend-boundary"></i>市州边界</span>
               <span class="legend-item"><i class="legend-line legend-national"></i>国道</span>
               <span class="legend-item"><i class="legend-line legend-expressway"></i>高速</span>
+              <span class="legend-item"><i class="legend-line legend-high-speed-rail"></i>高铁 / 动车</span>
+              <span class="legend-item"><i class="legend-line legend-conventional-rail"></i>普速铁路</span>
+              <span class="legend-item"><i class="legend-line legend-metro"></i>地铁 / 市域线</span>
+              <span class="legend-item"><i class="legend-station"></i>铁路 / 地铁站</span>
               <span class="legend-item"><i class="legend-line legend-planned"></i>部分路段需核实</span>
             </div>
-            <span class="map-attribution" id="map-attribution">© OpenStreetMap contributors · 行政边界参考 DataV · 道路为规划示意</span>
+            <span class="map-attribution" id="map-attribution">© OpenStreetMap contributors · 行政边界参考 DataV · 道路与铁路为旅行规划示意</span>
           </div>
 
           <aside class="map-panel" aria-label="地图景点与道路信息">
@@ -653,17 +860,72 @@
       </div>
     </section>
 
-    <section class="guide-notes" id="notes">
+    <section class="handbook" id="handbook">
       <div class="wrap">
-        <div class="notes-head">
-          <div><p class="kicker">BEFORE YOU GO</p><hr class="gold-rule"></div>
-          <div><h2>景点可以全部收藏，<br>行程不必全部塞满。</h2><p>高原旅行的核心不是“刷完”，而是根据季节、路况、海拔适应和自己的兴趣组合。开放、交通、预约与访客政策都可能发生变化。</p></div>
+        <div class="section-intro">
+          <div><p class="kicker">PLAN THE WHOLE TRIP</p><hr class="gold-rule"></div>
+          <div><h2>景点之外，<br>把整趟旅行真正安排明白。</h2><p>以下内容覆盖路线、交通、住宿、行李、天气、证件和安全。它们是规划框架，不替代临出发前的官方公告、实时天气、票务和道路信息。</p></div>
         </div>
-        <div class="note-cards">
-          <article class="note"><span>01</span><h3>先适应，再升高</h3><p>抵达高海拔地区的前24–48小时减少剧烈运动；出现持续加重的不适，应停止继续升高并寻求医疗帮助。</p></article>
-              <article class="note"><span>02</span><h3>查看当天公告</h3><p>川西与西藏的道路、冰川景区、边境证件、访客政策和寺院开放时段都可能调整，出发前以官方信息为准。</p></article>
-          <article class="note"><span>03</span><h3>尊重生活场所</h3><p>寺院、藏寨和牧场不是摄影布景。拍摄人物、院落、宗教活动前先询问，不使用无人机打扰当地生活。</p></article>
-          <article class="note"><span>04</span><h3>给天气留余量</h3><p>避免盲目赶夜路，为雨雪、落石、交通管制和临时闭园预留机动日；错过一个机位不值得冒险。</p></article>
+        <div class="handbook-grid">
+          <article class="handbook-card wide" id="planning">
+            <span class="handbook-icon" aria-hidden="true">⌁</span><h3>出行规划</h3><p>先确定季节和可用天数，再选择目的地和交通骨架，最后填入景点；高原和海岛都需要机动时间。</p>
+            <div class="guide-columns">
+              <div class="guide-column"><strong>川西 · 5–9 天</strong><ul><li>成都进出，先低后高</li><li>甘孜、阿坝不要硬塞同一短线</li><li>冬季和雨季给道路留余量</li></ul></div>
+              <div class="guide-column"><strong>西藏 · 7–15 天</strong><ul><li>拉萨先适应 1–2 天</li><li>林芝、日喀则可用铁路减轻车程</li><li>阿里与珠峰单独核对证件和季节</li></ul></div>
+              <div class="guide-column"><strong>香港 · 3–6 天</strong><ul><li>港岛、九龙按街区步行</li><li>大屿山、长洲、西贡各留整天</li><li>雨天用博物馆与室内路线替换</li></ul></div>
+            </div>
+          </article>
+
+          <article class="handbook-card wide" id="transport">
+            <span class="handbook-icon" aria-hidden="true">↝</span><h3>出行与交通</h3><p>地图已经加入高速 / 动车、普速铁路、高铁站、火车站和港铁站；线路是理解连接关系的示意，具体车次仍要以运营方为准。</p>
+            <div class="guide-columns">
+              <div class="guide-column"><strong>川西</strong><p>成都东 / 成都西接入川青、成灌和成雅铁路；到站后多数雪山、草原与藏寨仍需巴士、包车或自驾。</p></div>
+              <div class="guide-column"><strong>西藏</strong><p>青藏、拉日、拉林铁路连接拉萨、日喀则、山南、林芝与那曲。西藏暂无高速铁路，不应把动车等同于高铁。</p></div>
+              <div class="guide-column"><strong>香港</strong><p>西九龙高铁站连接内地；港铁适合城区，机场快线接机场，天星小轮和离岛渡轮承担跨海体验与通勤。</p></div>
+            </div>
+            <div class="handbook-links"><a href="#map">打开交通地图</a><a href="https://www.12306.cn/" target="_blank" rel="noreferrer">中国铁路 12306 ↗</a><a href="https://www.mtr.com.hk/" target="_blank" rel="noreferrer">香港港铁 ↗</a></div>
+          </article>
+
+          <article class="handbook-card" id="stays">
+            <span class="handbook-icon" aria-hidden="true">⌂</span><h3>住宿选择</h3><p>不要只看价格：海拔、交通枢纽、夜间到达、隔音、供暖 / 空调和取消政策会直接影响行程。</p>
+            <div class="guide-columns" style="grid-template-columns:1fr">
+              <div class="guide-column"><strong>川西 / 西藏</strong><p>首晚优先低海拔与医疗资源较好的城市；确认供暖、热水、供氧方式和停车。不要把“弥散供氧”当作医疗保障。</p></div>
+              <div class="guide-column"><strong>香港</strong><p>中环 / 金钟适合港岛，尖沙咀 / 油麻地适合步行与夜游，东涌适合早晚航班。核对房间面积、窗型和行李寄存。</p></div>
+            </div>
+          </article>
+
+          <article class="handbook-card" id="packing">
+            <span class="handbook-icon" aria-hidden="true">✓</span><h3>行李清单</h3><p>勾选状态会保存在当前浏览器。高原以保暖、防晒、补水为主，香港以轻量、防雨和长距离步行为主。</p>
+            <div class="packing-list">
+              <label class="packing-item"><input type="checkbox" data-pack-item="documents">身份证件与所需签注 / 证明</label>
+              <label class="packing-item"><input type="checkbox" data-pack-item="tickets">车票、机票、酒店与预约凭证</label>
+              <label class="packing-item"><input type="checkbox" data-pack-item="layers">分层衣物、冲锋衣或轻薄雨衣</label>
+              <label class="packing-item"><input type="checkbox" data-pack-item="shoes">防滑步行鞋与备用袜</label>
+              <label class="packing-item"><input type="checkbox" data-pack-item="sun">防晒霜、帽子、墨镜与润唇膏</label>
+              <label class="packing-item"><input type="checkbox" data-pack-item="power">充电器、充电宝与转换需求核对</label>
+              <label class="packing-item"><input type="checkbox" data-pack-item="medicine">常用药与个人处方药</label>
+              <label class="packing-item"><input type="checkbox" data-pack-item="offline">离线地图、紧急联系人与保险信息</label>
+            </div>
+          </article>
+
+          <article class="handbook-card wide" id="weather">
+            <span class="handbook-icon" aria-hidden="true">☼</span><h3>天气与穿衣</h3><p>同一天的温差、降水和体感可能比月平均值更重要。出发前 72 小时开始看逐小时预报，并每天复核预警。</p>
+            <table class="weather-table"><thead><tr><th>目的地</th><th>相对舒适时段</th><th>主要天气变量</th><th>穿衣逻辑</th></tr></thead><tbody>
+              <tr><td>川西</td><td>4–6 月、9–10 月</td><td>昼夜温差、雨雪、紫外线、山口结冰</td><td>排汗层 + 保暖层 + 防风防水外层</td></tr>
+              <tr><td>西藏</td><td>5–10 月</td><td>高海拔低温、强紫外线、雨季道路</td><td>分层保暖，帽子墨镜与防晒不可省</td></tr>
+              <tr><td>香港</td><td>10 月–次年4月</td><td>高温高湿、暴雨、雷暴与热带气旋</td><td>轻薄速干 + 随身雨具，室内备薄外套</td></tr>
+            </tbody></table>
+            <div class="handbook-links"><a href="https://weather.cma.cn/" target="_blank" rel="noreferrer">中央气象台 ↗</a><a href="https://www.hko.gov.hk/" target="_blank" rel="noreferrer">香港天文台 ↗</a></div>
+          </article>
+
+          <article class="handbook-card wide" id="safety">
+            <span class="handbook-icon" aria-hidden="true">＋</span><h3>证件、健康与安全</h3><p>川西和西藏先处理海拔、道路与边境区域；香港先核对通行证、有效签注与口岸安排。任何目的地都不要用“打卡”替代风险判断。</p>
+            <div class="guide-columns">
+              <div class="guide-column"><strong>高原健康</strong><p>前 24–48 小时减少剧烈活动。症状持续加重时停止升高、尽快下降并寻求医疗帮助，不依赖偏方或临时吸氧硬撑。</p></div>
+              <div class="guide-column"><strong>证件与预约</strong><p>边境地区、香港出入境、寺院与热门场馆的要求可能变化。只引用官方渠道，保存纸质与离线副本。</p></div>
+              <div class="guide-column"><strong>户外与城市</strong><p>不赶夜路、不越护栏、不闯封闭山径；在人流密集、渡轮和交通枢纽留意随身物品与末班时间。</p></div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -671,14 +933,14 @@
     <section class="credits" id="credits">
       <div class="wrap">
         <details id="credits-details">
-          <summary>展开查看全部 160 张图片的来源、作者与许可信息</summary>
+          <summary>展开查看全部 190 张图片的来源、作者与许可信息</summary>
           <div class="credit-list" id="credit-list"></div>
         </details>
       </div>
     </section>
   </main>
 
-  <footer><div class="wrap footer-row"><span>本页用于旅行灵感与行前整理；开放时间、票务、道路和访客政策请以目的地最新官方公告为准。</span><a href="#top">回到顶部 ↑</a></div></footer>
+  <footer><div class="wrap footer-row"><span>Cinna Travel · Cinna 旅行手册。开放时间、票务、道路、天气和访客政策请以目的地最新官方公告为准。</span><a href="#top">回到顶部 ↑</a></div></footer>
 
   <dialog class="lightbox" id="lightbox">
     <button class="lightbox-close" id="lightbox-close" aria-label="关闭大图">×</button>
