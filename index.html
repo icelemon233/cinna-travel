@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="川西与西藏完整景点图鉴：覆盖两地 80 个代表目的地，可按区域和景观主题筛选，含地图、道路、多图、海拔、季节与游玩建议。">
+  <link rel="preload" as="image" href="/cinna-travel/travel-assets/d33fc98ee5601ed7.webp" type="image/webp" fetchpriority="high">
   <title>向高处去｜川西 × 西藏完整景点图鉴</title>
   <style>
     :root {
@@ -369,7 +370,8 @@
     .card[hidden] { display: none; }
     .gallery { position: relative; display: grid; grid-template-columns: 1fr 1fr; height: 230px; gap: 2px; overflow: hidden; background: #ccd7d2; }
     .gallery-button { position: relative; cursor: zoom-in; border: 0; padding: 0; overflow: hidden; background: #ced8d3; }
-    .gallery-button img { width: 100%; height: 100%; object-fit: cover; transition: transform .55s cubic-bezier(.2,.7,.2,1); }
+    .gallery-button img { width: 100%; height: 100%; opacity: 0; object-fit: cover; transition: opacity .28s ease, transform .55s cubic-bezier(.2,.7,.2,1); }
+    .gallery-button img.is-loaded { opacity: 1; }
     .gallery-button:hover img { transform: scale(1.055); }
     .photo-index { position: absolute; left: 9px; bottom: 8px; display: grid; place-items: center; min-width: 23px; height: 23px; padding: 0 6px; border-radius: 999px; color: white; background: rgba(8,33,28,.58); backdrop-filter: blur(7px); font-size: 9px; }
     .card-no { position: absolute; z-index: 2; top: 13px; left: 13px; width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.42); border-radius: 50%; color: white; background: rgba(8,33,28,.6); backdrop-filter: blur(8px); font: 11px Georgia, serif; }
@@ -488,7 +490,7 @@
       .card[hidden] { display: flex; }
     }
   </style>
-  <script type="module" crossorigin src="/cinna-travel/assets/index-DF2em3bM.js"></script>
+  <script type="module" crossorigin src="/cinna-travel/assets/index-DYWz21mZ.js"></script>
   <link rel="modulepreload" crossorigin href="/cinna-travel/assets/lhasa-streets-joJIOYgd.js">
 </head>
 <body id="top">
@@ -643,7 +645,7 @@
   <dialog class="lightbox" id="lightbox">
     <button class="lightbox-close" id="lightbox-close" aria-label="关闭大图">×</button>
     <div class="lightbox-layout">
-      <div class="lightbox-media"><img id="lightbox-image" alt=""></div>
+      <div class="lightbox-media"><img id="lightbox-image" alt="" decoding="async"></div>
       <div class="lightbox-side">
         <p class="lightbox-kicker" id="lightbox-region"></p>
         <h3 id="lightbox-title"></h3>
