@@ -2,7 +2,7 @@
   "name": "cinna-travel",
   "private": true,
   "version": "1.0.0",
-  "description": "川西与拉萨完整景点图鉴",
+  "description": "覆盖川西、西藏与香港的 Cinna Travel 旅行手册",
   "type": "module",
   "packageManager": "pnpm@11.5.2",
   "scripts": {

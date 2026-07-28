@@ -3,9 +3,10 @@ import { mkdir, writeFile } from 'node:fs/promises';
 const sources = {
   sichuan: 'https://geo.datav.aliyun.com/areas_v3/bound/510000_full.json',
   tibet: 'https://geo.datav.aliyun.com/areas_v3/bound/540000_full.json',
+  hongkong: 'https://geo.datav.aliyun.com/areas_v3/bound/810000_full.json',
 };
 
-const capitals = new Set(['510100', '540100']);
+const capitals = new Set(['510100', '540100', '810001']);
 const tolerance = 0.015;
 
 function squaredSegmentDistance(point, start, end) {
@@ -67,7 +68,7 @@ function shortCityName(name) {
     .replace('藏族羌族自治州', '')
     .replace('藏族自治州', '')
     .replace('彝族自治州', '')
-    .replace(/市$|地区$/u, '');
+    .replace(/市$|地区$|区$/u, '');
 }
 
 const cityAdminData = {};
