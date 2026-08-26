@@ -1,29 +1,23 @@
 # Cinna Travel
 
-一份可交互的川西与西藏完整景点图鉴，覆盖 80 个代表目的地，包含景点筛选、地图路线、实景图、海拔、季节与游玩建议。
+2026 年 9 月 28 日至 10 月 4 日西藏阿里北线自驾行程手册。
 
-## 本地开发
+这是一个无构建依赖的静态网站，页面、样式与交互均在 `index.html` 中，图片位于 `assets/`。
 
-```bash
-pnpm install
-pnpm dev
-```
-
-## 构建
+## 本地预览
 
 ```bash
-pnpm build
-pnpm build:pages
+npm run dev
 ```
 
-页面图片已拆分到 `public/travel-assets`，以支持浏览器懒加载。若重新导入包含 Base64 图片的单文件页面，可执行 `pnpm assets:extract` 再构建。
+打开 <http://127.0.0.1:4173/>。
 
-## 部署 GitHub Pages
+## 发布 GitHub Pages
 
 ```bash
-pnpm deploy:pages
+npm run deploy
 ```
 
-部署脚本会构建站点，并将 `dist` 目录发布到仓库的 `gh-pages` 分支。
+发布脚本会把当前静态站点同步到 `gh-pages` 分支。
 
 线上地址：<https://icelemon233.github.io/cinna-travel/>
